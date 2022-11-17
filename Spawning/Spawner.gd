@@ -16,6 +16,5 @@ func _ready():
 		rng.randomize()
 		var y = global_position.y + rng.randf_range(-spawnRange, spawnRange)
 		object.global_position = Vector2(x, y)
-		object.set_as_toplevel(true)
 		print("Tree spawned at: " + str(object.global_position.x) + " ," + str(object.global_position.y))
 		add_child(object)
