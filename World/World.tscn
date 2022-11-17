@@ -37,6 +37,15 @@ tile_data = PoolIntArray( -327685, 0, 655373, -327684, 0, 655373, -327683, 0, 65
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
+<<<<<<< Updated upstream
+=======
+[node name="Spawner" parent="." instance=ExtResource( 3 )]
+position = Vector2( -50, -33 )
+howMany = 30
+spawnRange = 200
+OBJECT = ExtResource( 4 )
+
+>>>>>>> Stashed changes
 [node name="Player" parent="." instance=ExtResource( 1 )]
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
