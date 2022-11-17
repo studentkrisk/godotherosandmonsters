@@ -4,14 +4,12 @@ export(int) var howMany = 0
 export(int) var spawnRange = 0;
 export var OBJECT : PackedScene
 
-onready var TREE = preload("res://Objects/Tree.tscn")
-
 var rng = RandomNumberGenerator.new()
 
 func _ready():
 	for i in range(howMany):
 		rng.randomize()
-		var object =  TREE.instance()
+		var object =  OBJECT.instance()
 		var x = global_position.x + rng.randf_range(-spawnRange, spawnRange)
 		rng.randomize()
 		var y = global_position.y + rng.randf_range(-spawnRange, spawnRange)
