@@ -103,6 +103,7 @@ func generate_hit_effect():
 
 func _on_Hurtbox_area_entered(area):
 	health -= area.damage
+	velocity += area.knockbackVector * 5
 	generate_hit_effect()
 	if health <= 0:
 		var EnemyDeath = load("res://Enemies/EnemyDeath.tscn")
