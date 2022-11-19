@@ -1,0 +1,21 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform bool timeStop = false;
+uniform bool world = false;
+
+void fragment(){
+	vec4 previous_color = texture(TEXTURE, UV);
+	if (timeStop){
+		COLOR = vec4((previous_color.r + previous_color.b + previous_color.g)/3.f, (previous_color.r + previous_color.b + previous_color.g)/3.f, (previous_color.r + previous_color.b + previous_color.g)/3.f, previous_color.a);
+	}
+	else{
+		if (world){
+			COLOR = vec4(1, 1, previous_color.g, previous_color.a);
+		}
+		else:
+			COLOR = previous_color
+	}
+}"
