@@ -10,20 +10,20 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("menu"):
 		if PManager.pause == false:
 			PManager.pause = true
-			popup_centered()
+			visible = true
 		else:
 			PManager.pause = false
 			self.visible = false
 
-func _on_PopupMenu_id_pressed(id):
+func _on_PopupMenu_index_pressed(index):
 	if PManager.slotavailible < 4 and len(PManager.inventory) != 0:
 		match PManager.slotavailible:
 			1:
-				PManager.slot1 = PManager.inventory[id]
+				PManager.slot1 = PManager.inventory[index]
 			2:
-				PManager.slot2 = PManager.inventory[id]
+				PManager.slot2 = PManager.inventory[index]
 			3:
-				PManager.slot3 = PManager.inventory[id]
-		PManager.inventory.remove(id)
+				PManager.slot3 = PManager.inventory[index]
+		PManager.inventory.remove(index)
 		PManager.slotavailible += 1
 		_ready()

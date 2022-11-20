@@ -19,7 +19,6 @@ func slash():
 		can_slash = false
 
 func slashing_finished():
-	PManager.pause = false
 	slashing = false
 
 func _on_Timer_timeout():

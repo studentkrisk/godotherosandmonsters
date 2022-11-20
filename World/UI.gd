@@ -25,3 +25,12 @@ func _process(delta):
 		$Stamina.rect_size.x = 60 - (player.dashCooldown.time_left/5) * 60
 	else:
 		$Stamina.rect_size.x = 60
+
+func _on_Button_pressed():
+	print(PManager.pause)
+	if !PManager.pause:
+		PManager.pause = true
+		$PopupMenu.visible = true
+	else:
+		PManager.pause = false
+		$PopupMenu.visible = false

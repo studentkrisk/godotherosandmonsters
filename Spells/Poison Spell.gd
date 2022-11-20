@@ -3,7 +3,7 @@ extends Node2D
 export(int) var lifetime = 5
 export(int) var waitTime = 0.1
 
-var counter = 0
+var counter = false
 var ready = false
 var hasStatusEffect = false
 
@@ -13,9 +13,11 @@ func _ready():
 	$Timer.start(lifetime)
 
 func _process(delta):
+	$WaitTimer.paused = PManager.pause
+	$Timer.paused = PManager.pause
 	if ready:
-		counter += 1
-		if fmod(counter, 2) == 0:
+		counter = !counter
+		if counter:
 			$Hitbox.monitoring = true
 		else:
 			$Hitbox/CollisionShape2D.disabled = false

@@ -12,12 +12,15 @@ export(int) var ROTATIONSPEED = 10
 
 onready var animatedSprite = $AnimatedSprite
 onready var dashCooldown = $DashCooldown
+onready var position2D = $Position2D
+onready var swordPivot = $Position2D/SwordPivot
+onready var sword = $Position2D/SwordPivot/Sword
 onready var HitEffect = preload("res://HitEffect.tscn")
 
 var tick = 0
 var flipped = false
 
-func move(delta, slow):
+func move(delta):
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	input_vector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
@@ -32,8 +35,6 @@ func move(delta, slow):
 		else:
 			velocity += input_vector * ACCELERATION * delta * 2
 			velocity = velocity.clamped(MAX_SPEED * 2)
-		if slow:
-			velocity *= 0.1
 	else:
 		animatedSprite.animation = "Idle"
 	
@@ -49,48 +50,39 @@ func move(delta, slow):
 	else:
 		get_tree().current_scene.scale = Vector2(1, 1)
 
-func _physics_process(delta):
-	if !PManager.pause:
-		if get_global_mouse_position().x < global_position.x and !flipped:
-			self.scale.x *= -1
-			$Position2D.scale.y *= -1
-			$Position2D.position.y *= -1
-			$Position2D/SwordPivot/Sword.scale.x *= -1
-			$Position2D/SwordPivot/Sword.position.x *= -1
-			$Position2D.rotation_degrees = 0
-			flipped = true
-		if get_global_mouse_position().x > global_position.x && flipped:
-			self.scale.x *= -1
-			$Position2D.scale.y *= -1
-			$Position2D.position.y *= -1
-			$Position2D/SwordPivot/Sword.scale.x *= -1
-			$Position2D/SwordPivot/Sword.position.x *= -1
-			$Position2D.rotation_degrees = 0
-			flipped = false
+func flip():
+	self.scale.x *= -1
+	position2D.scale.y *= -1
+	position2D.position.y *= -1
+	sword.scale.x *= -1
+	sword.position.x *= -1
+	position2D.rotation_degrees = 0
+	flipped = !flipped
+
+func processStatus():
 	if(PManager.statusCondition == "Slow"):
 		MAX_SPEED = 25
 	else:
 		MAX_SPEED = 200
-	$Position2D/SwordPivot/Sword.swordtransform = $Position2D/SwordPivot.transform
+
+func _physics_process(delta):
+	if get_global_mouse_position().x < global_position.x and !flipped:
+		flip()
+	if get_global_mouse_position().x > global_position.x && flipped:
+		flip()
+	processStatus()
+	sword.swordtransform = swordPivot.transform
 	if !PManager.pause:
-		$AnimatedSprite.playing = true
-		move(delta, false)
-		get_tree().current_scene.material.set("shader_param/timeStop", false)
-		$AnimatedSprite.material.set("shader_param/timeStop", false)
-	else:
-		$AnimatedSprite.playing = false
-		move(delta, true)
-		get_tree().current_scene.material.set("shader_param/timeStop", true)
-		$AnimatedSprite.material.set("shader_param/timeStop", true)
-	if !$Position2D/SwordPivot/Sword.slashing:
+		move(delta)
+	if !sword.slashing:
 		rotateToTarget(get_global_mouse_position(), delta)
 
 func rotateToTarget(target, delta):
 	var direction = (target - global_position)
-	$Position2D/SwordPivot/Sword.knockbackVector = direction
+	sword.knockbackVector = direction.normalized()
 	var angleTo = 0
-	angleTo = $Position2D/SwordPivot.transform.x.angle_to(direction)
-	$Position2D/SwordPivot.rotate(sign(angleTo) * min(delta * ROTATIONSPEED, abs(angleTo)))
+	angleTo = swordPivot.transform.x.angle_to(direction)
+	swordPivot.rotate(sign(angleTo) * min(delta * ROTATIONSPEED, abs(angleTo)))
 
 func parabolaThing(time):
 	return (time * time)/(4 * 0.5)

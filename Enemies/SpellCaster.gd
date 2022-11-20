@@ -40,13 +40,13 @@ func _physics_process(delta):
 		elif state == ATTACK:
 			attack(delta)
 		$AnimatedSprite.playing = true
-		get_tree().current_scene.material.set("shader_param/timeStop", false)
-		$AnimatedSprite.material.set("shader_param/timeStop", false)
 	else:
 		$AnimatedSprite.playing = false
-		$AnimatedSprite.material.set("shader_param/timeStop", true)
 
 func attack(delta):
+	if(velocity != Vector2.ZERO):
+		velocity = move_and_slide(velocity)
+		velocity *= 0.95
 	$AnimatedSprite.animation = "Idle"
 	if attack_ready:
 		var poisonSpell = PoisonPotion.instance()
@@ -79,6 +79,7 @@ func chase(delta):
 		velocity *= 0.9
 		velocity = move_and_slide(velocity)
 		if global_position.distance_to(player.global_position) <= 45:
+			velocity = Vector2.ZERO
 			state = ATTACK
 
 func rotateToTarget(target, delta):
@@ -103,7 +104,7 @@ func generate_hit_effect():
 
 func _on_Hurtbox_area_entered(area):
 	health -= area.damage
-	velocity += area.knockbackVector * 5
+	velocity += area.knockbackVector * 50
 	generate_hit_effect()
 	if health <= 0:
 		var EnemyDeath = load("res://Enemies/EnemyDeath.tscn")

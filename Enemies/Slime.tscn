@@ -1,15 +1,9 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Art/enemies/slime/slime_idle_spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://Art/enemies/slime/slime_run_spritesheeet.png" type="Texture" id=2]
 [ext_resource path="res://Enemies/Slime.gd" type="Script" id=3]
-[ext_resource path="res://World/TimeStopShader.tres" type="Shader" id=4]
 [ext_resource path="res://Enemies/Hitbox.gd" type="Script" id=5]
-
-[sub_resource type="ShaderMaterial" id=18]
-shader = ExtResource( 4 )
-shader_param/timeStop = false
-shader_param/world = false
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 1 )
@@ -89,10 +83,9 @@ script = ExtResource( 3 )
 health = 5
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-material = SubResource( 18 )
 frames = SubResource( 13 )
 animation = "Run"
-frame = 5
+frame = 1
 playing = true
 
 [node name="PlayerDetectionZone" type="Area2D" parent="."]

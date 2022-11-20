@@ -5,8 +5,8 @@ var inventory = ["tripslash", "heavenslash"]
 var slotavailible = 1
 var statusCondition = ""
 
-var slot1 = "tripslash"
-var slot2 = "heavenslash"
+var slot1 = "none"
+var slot2 = "none"
 var slot3 = "none"
 
 var movementVector = Vector2.ZERO

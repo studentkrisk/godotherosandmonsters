@@ -1,15 +1,9 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://World/TimeStopShader.tres" type="Shader" id=1]
 [ext_resource path="res://Enemies/EnemySword.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Art/enemies/goblin/goblin_run_spritesheet.png" type="Texture" id=3]
 [ext_resource path="res://Art/enemies/goblin/goblin_idle_spritesheet.png" type="Texture" id=4]
 [ext_resource path="res://Enemies/Goblin.gd" type="Script" id=5]
-
-[sub_resource type="ShaderMaterial" id=13]
-shader = ExtResource( 1 )
-shader_param/timeStop = false
-shader_param/world = false
 
 [sub_resource type="AtlasTexture" id=18]
 atlas = ExtResource( 4 )
@@ -84,11 +78,10 @@ radius = 7.07107
 script = ExtResource( 5 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-material = SubResource( 13 )
 z_index = 1
 frames = SubResource( 30 )
 animation = "Run"
-frame = 1
+frame = 3
 playing = true
 
 [node name="PlayerDetectionZone" type="Area2D" parent="."]

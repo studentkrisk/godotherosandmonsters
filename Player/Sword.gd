@@ -20,13 +20,10 @@ func _physics_process(delta):
 			slash()
 		if Input.is_action_just_pressed("1") and PManager.can_useslot1:
 			evaluate(PManager.slot1 + "(1)")
-			PManager.can_useslot1 = false
 		elif Input.is_action_just_pressed("2") and PManager.can_useslot2:
 			evaluate(PManager.slot2 + "(2)")
-			PManager.can_useslot2 = false
 		elif Input.is_action_just_pressed("3") and PManager.can_useslot3:
 			evaluate(PManager.slot3 + "(3)")
-			PManager.can_useslot3 = false
 
 func slash():
 	if can_slash:
@@ -46,34 +43,34 @@ func heavenslash(num):
 
 func tripslash(num):
 	slashing = true
-	#PManager.pause = true
 	$AnimationPlayer.play("TripleSlash")
 	startTime(num, 3)
-	
 
 func startTime(num, time):
 	match num:
 		1:
+			PManager.can_useslot1 = false
 			PManager.slot1Timer.start(time)
 			PManager.slot1time = time
 			PManager.slot1stop = false
 		2:
+			PManager.can_useslot2 = false
 			PManager.slot2Timer.start(time)
 			PManager.slot2time = time
 			PManager.slot2stop = false
 		3:
+			PManager.can_useslot3 = false
 			PManager.slot3Timer.start(time)
 			PManager.slot3time = time
 			PManager.slot3stop = false
 
 func slashing_finished():
-	PManager.pause = false
 	slashing = false
 
 func _on_Timer_timeout():
 	can_slash = true
 
-func none():
+func none(num):
 	pass
 
 func evaluate(command, variable_names = [], variable_values = []) -> void:
