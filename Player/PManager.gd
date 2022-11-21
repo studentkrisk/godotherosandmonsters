@@ -1,13 +1,12 @@
 extends Node2D
 
 var health = 4
-var inventory = ["tripslash", "heavenslash"]
+var inventory = []
 var slotavailible = 1
 var statusCondition = ""
-
-var slot1 = "none"
-var slot2 = "none"
-var slot3 = "none"
+var currentWeaponis1 = true
+var weapon1 = "Sword"
+var weapon2 = ""
 
 var movementVector = Vector2.ZERO
 var fightVector = Vector2.ZERO
@@ -41,3 +40,19 @@ func _on_slot2Timer_timeout():
 func _on_slot3Timer_timeout():
 	can_useslot3 = true
 	slot3stop = true
+	
+func equipWeapon(weapon, slot):
+	evaluate("weapon" + slot + " = " + weapon)
+	
+func evaluate(command, variable_names = [], variable_values = []) -> void:
+	var expression = Expression.new()
+	var error = expression.parse(command, variable_names)
+	if error != OK:
+		push_error(expression.get_error_text())
+		return
+
+	var result = expression.execute(variable_values, self)
+
+	if not expression.has_execute_failed():
+		pass
+		#print(str(result))

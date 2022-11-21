@@ -19,11 +19,11 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("slash"):
 			slash()
 		if Input.is_action_just_pressed("1") and PManager.can_useslot1:
-			evaluate(PManager.slot1 + "(1)")
+			tripslash(1)
 		elif Input.is_action_just_pressed("2") and PManager.can_useslot2:
-			evaluate(PManager.slot2 + "(2)")
+			heavenslash(2)
 		elif Input.is_action_just_pressed("3") and PManager.can_useslot3:
-			evaluate(PManager.slot3 + "(3)")
+			pass
 
 func slash():
 	if can_slash:
@@ -72,17 +72,4 @@ func _on_Timer_timeout():
 
 func none(num):
 	pass
-
-func evaluate(command, variable_names = [], variable_values = []) -> void:
-	var expression = Expression.new()
-	var error = expression.parse(command, variable_names)
-	if error != OK:
-		push_error(expression.get_error_text())
-		return
-
-	var result = expression.execute(variable_values, self)
-
-	if not expression.has_execute_failed():
-		pass
-		#print(str(result))
 
