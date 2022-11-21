@@ -85,7 +85,7 @@ health = 5
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 13 )
 animation = "Run"
-frame = 1
+frame = 3
 playing = true
 
 [node name="PlayerDetectionZone" type="Area2D" parent="."]

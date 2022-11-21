@@ -81,7 +81,7 @@ script = ExtResource( 5 )
 z_index = 1
 frames = SubResource( 30 )
 animation = "Run"
-frame = 3
+frame = 5
 playing = true
 
 [node name="PlayerDetectionZone" type="Area2D" parent="."]
